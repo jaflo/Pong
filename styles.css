@@ -33,6 +33,15 @@ body {
 	padding: 30px;
 }
 
+#title.up {
+	top: 0;
+	transform: none;
+}
+
+#title.up em {
+	display: none;
+}
+
 #title div {
 	max-width: 500px;
 	margin: auto;

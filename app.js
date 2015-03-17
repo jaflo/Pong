@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	init();
 	animate();
-
 	function init() {
 		score = 0;
 		camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
@@ -32,35 +31,32 @@ $(document).ready(function() {
 		ballVx = random(7, 10);
 		ballVy = random(-1, 1);
 	}
-
 	Leap.loop(function(frame) {
 		frame.hands.forEach(function(hand, index) {
 			var me = index==1 ? paddle1 : paddle2;
 			me.position.x = hand.screenPosition()[0]-300;
+			//if (Math.abs(me.position.y - ball.position.y)>10)
 			me.position.y = -hand.screenPosition()[1]-300;
 		});
-		if (frame.hands.length == 0) pause();
+		if (frame.hands.length !== 2) pause();
 		else play();
 	}).use('screenPosition', {scale: 1});
-
 	function random(min, max) {
 		return Math.random() * (max - min) + min;
 	}
-
-	var paused = true;
-
+	var paused = false;
 	function pause() {
 		paused = true;
+		$("#title").removeClass("up");
 	}
-
 	function play() {
 		paused = false;
+		$("#title").addClass("up");
 	}
-
 	function animate() {
 		var debug = "", off;
+		requestAnimationFrame(animate);
 		if (!paused) {
-			requestAnimationFrame(animate);
 			debug += "V<sub>x</sub>: ";
 			debug += ballVx+"<br />V<sub>y</sub>: ";
 			debug += ballVy+"<br />";
@@ -71,7 +67,7 @@ $(document).ready(function() {
 			else if (ball.position.x+20 > paddle2.position.x) paddle = paddle2;
 			if (paddle) {
 				if (ball.position.y < paddle.position.y+100 &&
-						ball.position.y > paddle.position.y-100) {
+					ball.position.y > paddle.position.y-100) {
 					// Ball has hit a paddle
 					ballVx *= -1;
 					off = ball.position.y - paddle.position.y;
@@ -80,8 +76,9 @@ $(document).ready(function() {
 				}
 			}
 			$("#score").text(score);
-			if (ball.position.x < paddle1.position.x-100 ||
-					ball.position.x > paddle2.position.x+100) {
+			var thresh = 0;
+			if (ball.position.x < paddle1.position.x-thresh ||
+				ball.position.x > paddle2.position.x+thresh) {
 				ball.position.x = ball.position.y = 0;
 				ballVx = random(7, 10);
 				ballVy = random(-1, 1);
@@ -89,8 +86,8 @@ $(document).ready(function() {
 			}
 			ball.position.x += ballVx;
 			ball.position.y += ballVy;
-			renderer.render(scene, camera);
 		}
+		renderer.render(scene, camera);
 		//$("#debug").html(debug);
 	}
 });
