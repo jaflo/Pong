@@ -1,0 +1,52 @@
+body {
+	margin: 0;
+	overflow: hidden;
+}
+
+#score, #debug {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	color: white;
+	z-index: 10;
+	font-size: 30px;
+	font-family: sans-serif;
+	text-align: right;
+}
+
+#debug {
+	top: 50px;
+	font-size: 16px;
+}
+
+#title {
+	font-family: sans-serif;
+	text-align: center;
+	position: fixed;
+	top: 50%;
+	left: 0;
+	right: 0;
+	color: white;
+	transform: translateY(-50%);
+	text-shadow: 0 0 10px black, 0 0 2px black, 0 0 3px black, 0 0 5px black;
+	background: rgba(0,0,0,0.5);
+	padding: 30px;
+}
+
+#title div {
+	max-width: 500px;
+	margin: auto;
+}
+
+#title h1 {
+	font-family: Audiowide;
+	text-transform: uppercase;
+	letter-spacing: 0.4em;
+	margin: 0;
+	margin-bottom: 30px;
+}
+
+#title i {
+	display: block;
+	margin-top: 30px;
+}
